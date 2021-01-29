@@ -1,0 +1,4 @@
+Vagrant.configure("2") do |config|
+  config.vm.box = "rybalka1/Centos-7-kernel-5.4.93-VBox_addon"
+  config.vm.box_version = "1.0"
+end
