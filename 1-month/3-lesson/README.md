@@ -17,3 +17,11 @@
 Протестировал как работают снапшоты, руководствуясь вот этой статьёй:
 
 https://help.ubuntu.ru/wiki/btrfs
+
+Далее создал vagrant box и залил его на:
+
+https://app.vagrantup.com/rybalka1/boxes/3-lesson_lvm
+
+Конфингурация виртуальной машины:
+
+https://github.com/rybalka1/OTUS-homework/blob/master/1-month1-month/3-lesson/Vagrantfile
