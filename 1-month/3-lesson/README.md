@@ -28,4 +28,4 @@
 
 Лог выполненой работы.  
 
-<https://github.com/rybalka1/OTUS-homework/blob/master/1-month1-month/3-lesson/lab03-lvm>
+<https://github.com/rybalka1/OTUS-homework/blob/master/1-month/3-lesson/lab03-lvm>
