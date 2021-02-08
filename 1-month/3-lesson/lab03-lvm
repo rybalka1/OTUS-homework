@@ -1,0 +1,168 @@
+Script started on Mon 08 Feb 2021 01:41:11 PM UTC
+]0;root@lvm:/home/vagrant[?1034h[root@lvm vagrant]# lsblk 
+NAME                    MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda                       8:0    0   40G  0 disk 
+├─sda1                    8:1    0    1M  0 part 
+├─sda2                    8:2    0    1G  0 part /boot
+└─sda3                    8:3    0   39G  0 part 
+  ├─VolGroup00-LogVol00 253:0    0 37.5G  0 lvm  /
+  └─VolGroup00-LogVol01 253:1    0  1.5G  0 lvm  [SWAP]
+sdb                       8:16   0   10G  0 disk 
+sdc                       8:32   0    2G  0 disk 
+sdd                       8:48   0    1G  0 disk 
+sde                       8:64   0    1G  0 disk 
+]0;root@lvm:/home/vagrant[root@lvm vagrant]#  pvcreate /dev/sdb[1P
+  Physical volume "/dev/sdb" successfully created.
+]0;root@lvm:/home/vagrant[root@lvm vagrant]# vgcreate vg_root /dev/sdb[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C
+  Volume group "vg_root" successfully created
+]0;root@lvm:/home/vagrant[root@lvm vagrant]#  lvcreate -n lv_root -l +100%FREE /dev/vg_root[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[1P[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C
+  Logical volume "lv_root" created.
+]0;root@lvm:/home/vagrant[root@lvm vagrant]# mkfs.xfs /dev/vg_root/lv_root 
+meta-data=/dev/vg_root/lv_root   isize=512    agcount=4, agsize=655104 blks
+         =                       sectsz=512   attr=2, projid32bit=1
+         =                       crc=1        finobt=0, sparse=0
+data     =                       bsize=4096   blocks=2620416, imaxpct=25
+         =                       sunit=0      swidth=0 blks
+naming   =version 2              bsize=4096   ascii-ci=0 ftype=1
+log      =internal log           bsize=4096   blocks=2560, version=2
+         =                       sectsz=512   sunit=0 blks, lazy-count=1
+realtime =none                   extsz=4096   blocks=0, rtextents=0
+]0;root@lvm:/home/vagrant[root@lvm vagrant]# mount /dev/vg_root/lv_root /mnt
+]0;root@lvm:/home/vagrant[root@lvm vagrant]# xfsdump -J - /dev/VolGroup00/LogVol00 | xfsrestore -J - /mnt[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C
+xfsdump: using file dump (drive_simple) strategy
+xfsdump: version 3.1.7 (dump format 3.0)
+xfsdump: level 0 dump of lvm:/
+xfsdump: dump date: Mon Feb  8 13:42:43 2021
+xfsdump: session id: a99bbd00-ea70-4891-bbb9-afde39d6595b
+xfsdump: session label: ""
+xfsrestore: using file dump (drive_simple) strategy
+xfsrestore: version 3.1.7 (dump format 3.0)
+xfsrestore: searching media for dump
+xfsdump: ino map phase 1: constructing initial dump list
+xfsdump: ino map phase 2: skipping (no pruning necessary)
+xfsdump: ino map phase 3: skipping (only one dump stream)
+xfsdump: ino map construction complete
+xfsdump: estimated dump size: 751843776 bytes
+xfsdump: creating dump session media file 0 (media 0, file 0)
+xfsdump: dumping ino map
+xfsdump: dumping directories
+xfsrestore: examining media file 0
+xfsrestore: dump description: 
+xfsrestore: hostname: lvm
+xfsrestore: mount point: /
+xfsrestore: volume: /dev/mapper/VolGroup00-LogVol00
+xfsrestore: session time: Mon Feb  8 13:42:43 2021
+xfsrestore: level: 0
+xfsrestore: session label: ""
+xfsrestore: media label: ""
+xfsrestore: file system id: b60e9498-0baa-4d9f-90aa-069048217fee
+xfsrestore: session id: a99bbd00-ea70-4891-bbb9-afde39d6595b
+xfsrestore: media id: 06d4cf69-6ab9-4c01-8708-7536c63e6158
+xfsrestore: searching media for directory dump
+xfsrestore: reading directories
+xfsdump: dumping non-directory files
+xfsrestore: 2699 directories and 23617 entries processed
+xfsrestore: directory post-processing
+xfsrestore: restoring non-Script started on Mon 08 Feb 2021 01:58:35 PM UTC
+]0;root@lvm:/home/vagrant[?1034h[root@lvm vagrant]#  lvremove /dev/vg_root/lv_root[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[1P[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C 
+Do you really want to remove active logical volume vg_root/lv_root? [y/n]: y
+  Logical volume "lv_root" successfully removed
+]0;root@lvm:/home/vagrant[root@lvm vagrant]# vgremove /dev/vg_root[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C
+  Volume group "vg_root" successfully removed
+]0;root@lvm:/home/vagrant[root@lvm vagrant]#  pvremove /dev/sdb[1P[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C
+  Labels on physical volume "/dev/sdb" successfully wiped.
+]0;root@lvm:/home/vagrant[root@lvm vagrant]# vcreate -n LogVol_Home -L 2G /dev/VolGroup00
+bash: vcreate: command not found
+]0;root@lvm:/home/vagrant[root@lvm vagrant]# vcreate -n LogVol_Home -L 2G /dev/VolGroup00[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[1@l[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C
+  Logical volume "LogVol_Home" created.
+]0;root@lvm:/home/vagrant[root@lvm vagrant]# mkfs.xfs /dev/VolGroup00/LogVol_Home 
+meta-data=/dev/VolGroup00/LogVol_Home isize=512    agcount=4, agsize=131072 blks
+         =                       sectsz=512   attr=2, projid32bit=1
+         =                       crc=1        finobt=0, sparse=0
+data     =                       bsize=4096   blocks=524288, imaxpct=25
+         =                       sunit=0      swidth=0 blks
+naming   =version 2              bsize=4096   ascii-ci=0 ftype=1
+log      =internal log           bsize=4096   blocks=2560, version=2
+         =                       sectsz=512   sunit=0 blks, lazy-count=1
+realtime =none                   extsz=4096   blocks=0, rtextents=0
+]0;root@lvm:/home/vagrant[root@lvm vagrant]#  mount /dev/VolGroup00/LogVol_Home /mnt/[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[1P[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C
+]0;root@lvm:/home/vagrant[root@lvm vagrant]# cp -aR /home/* /mnt/
+]0;root@lvm:/home/vagrant[root@lvm vagrant]# rm -rf /home/*
+]0;root@lvm:/home/vagrant[root@lvm vagrant]#  umount /mnt[1P[C[C[C[C[C[C[C[C[C[C[C
+]0;root@lvm:/home/vagrant[root@lvm vagrant]# mount /dev/VolGroup00/LogVol_Home /home/
+]0;root@lvm:/home/vagrant[root@lvm vagrant]# echo "`blkid | grep Home | awk '{print $2}'` /home xfs defaults 0 0" >> /etc/fstab
+]0;root@lvm:/home/vagrant[root@lvm vagrant]# touch /home/file{1..20}
+]0;root@lvm:/home/vagrant[root@lvm vagrant]# ls -l /home/
+total 0
+-rw-r--r--. 1 root    root     0 Feb  8 14:01 file1
+-rw-r--r--. 1 root    root     0 Feb  8 14:01 file10
+-rw-r--r--. 1 root    root     0 Feb  8 14:01 file11
+-rw-r--r--. 1 root    root     0 Feb  8 14:01 file12
+-rw-r--r--. 1 root    root     0 Feb  8 14:01 file13
+-rw-r--r--. 1 root    root     0 Feb  8 14:01 file14
+-rw-r--r--. 1 root    root     0 Feb  8 14:01 file15
+-rw-r--r--. 1 root    root     0 Feb  8 14:01 file16
+-rw-r--r--. 1 root    root     0 Feb  8 14:01 file17
+-rw-r--r--. 1 root    root     0 Feb  8 14:01 file18
+-rw-r--r--. 1 root    root     0 Feb  8 14:01 file19
+-rw-r--r--. 1 root    root     0 Feb  8 14:01 file2
+-rw-r--r--. 1 root    root     0 Feb  8 14:01 file20
+-rw-r--r--. 1 root    root     0 Feb  8 14:01 file3
+-rw-r--r--. 1 root    root     0 Feb  8 14:01 file4
+-rw-r--r--. 1 root    root     0 Feb  8 14:01 file5
+-rw-r--r--. 1 root    root     0 Feb  8 14:01 file6
+-rw-r--r--. 1 root    root     0 Feb  8 14:01 file7
+-rw-r--r--. 1 root    root     0 Feb  8 14:01 file8
+-rw-r--r--. 1 root    root     0 Feb  8 14:01 file9
+drwx------. 3 vagrant vagrant 74 Feb  8 13:57 [0m[38;5;27mvagrant[0m
+]0;root@lvm:/home/vagrant[root@lvm vagrant]#  lvcreate -L 100MB -s -n home_snap /dev/VolGroup00/LogVol_Home[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[1P[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C
+  Rounding up size to full physical extent 128.00 MiB
+  Logical volume "home_snap" created.
+]0;root@lvm:/home/vagrant[root@lvm vagrant]# rm -f /home/file{11..20}
+]0;root@lvm:/home/vagrant[root@lvm vagrant]# rm -f /home/file{11..20}[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Clvcreate -L 100MB -s -n home_snap /dev/VolGroup00/LogVol_Home[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cs -l /home/[K
+total 0
+-rw-r--r--. 1 root    root     0 Feb  8 14:01 file1
+-rw-r--r--. 1 root    root     0 Feb  8 14:01 file10
+-rw-r--r--. 1 root    root     0 Feb  8 14:01 file2
+-rw-r--r--. 1 root    root     0 Feb  8 14:01 file3
+-rw-r--r--. 1 root    root     0 Feb  8 14:01 file4
+-rw-r--r--. 1 root    root     0 Feb  8 14:01 file5
+-rw-r--r--. 1 root    root     0 Feb  8 14:01 file6
+-rw-r--r--. 1 root    root     0 Feb  8 14:01 file7
+-rw-r--r--. 1 root    root     0 Feb  8 14:01 file8
+-rw-r--r--. 1 root    root     0 Feb  8 14:01 file9
+drwx------. 3 vagrant vagrant 74 Feb  8 13:57 [0m[38;5;27mvagrant[0m
+]0;root@lvm:/home/vagrant[root@lvm vagrant]# umount /home
+]0;root@lvm:/home/vagrant[root@lvm vagrant]# vconvert --merge /dev/VolGroup00/home_snap
+bash: vconvert: command not found
+]0;root@lvm:/home/vagrant[root@lvm vagrant]# vconvert --merge /dev/VolGroup00/home_snap[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[1@l[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C
+  Merging of volume VolGroup00/home_snap started.
+  VolGroup00/LogVol_Home: Merged: 100.00%
+]0;root@lvm:/home/vagrant[root@lvm vagrant]#  mount /home[1P
+]0;root@lvm:/home/vagrant[root@lvm vagrant]# ls -l /home/
+total 0
+-rw-r--r--. 1 root    root     0 Feb  8 14:01 file1
+-rw-r--r--. 1 root    root     0 Feb  8 14:01 file10
+-rw-r--r--. 1 root    root     0 Feb  8 14:01 file11
+-rw-r--r--. 1 root    root     0 Feb  8 14:01 file12
+-rw-r--r--. 1 root    root     0 Feb  8 14:01 file13
+-rw-r--r--. 1 root    root     0 Feb  8 14:01 file14
+-rw-r--r--. 1 root    root     0 Feb  8 14:01 file15
+-rw-r--r--. 1 root    root     0 Feb  8 14:01 file16
+-rw-r--r--. 1 root    root     0 Feb  8 14:01 file17
+-rw-r--r--. 1 root    root     0 Feb  8 14:01 file18
+-rw-r--r--. 1 root    root     0 Feb  8 14:01 file19
+-rw-r--r--. 1 root    root     0 Feb  8 14:01 file2
+-rw-r--r--. 1 root    root     0 Feb  8 14:01 file20
+-rw-r--r--. 1 root    root     0 Feb  8 14:01 file3
+-rw-r--r--. 1 root    root     0 Feb  8 14:01 file4
+-rw-r--r--. 1 root    root     0 Feb  8 14:01 file5
+-rw-r--r--. 1 root    root     0 Feb  8 14:01 file6
+-rw-r--r--. 1 root    root     0 Feb  8 14:01 file7
+-rw-r--r--. 1 root    root     0 Feb  8 14:01 file8
+-rw-r--r--. 1 root    root     0 Feb  8 14:01 file9
+drwx------. 3 vagrant vagrant 74 Feb  8 13:57 [0m[38;5;27mvagrant[0m
+]0;root@lvm:/home/vagrant[root@lvm vagrant]# exit 
+exit
+
+Script done on Mon 08 Feb 2021 02:02:53 PM UTC
