@@ -6,3 +6,4 @@
 - [2-е задание](<https://github.com/rybalka1/OTUS-homework/tree/master/1-month/2-lesson>)
 - [3-е задание](<https://github.com/rybalka1/OTUS-homework/tree/master/1-month/3-lesson>)
 - [4-е задание](<https://github.com/rybalka1/OTUS-homework/tree/master/1-month/4-lesson>)
+- [5-е задание](<https://github.com/rybalka1/OTUS-homework/tree/master/1-month/5-lesson>)
