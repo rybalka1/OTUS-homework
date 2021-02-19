@@ -326,5 +326,5 @@ Found initrd image: /boot/initramfs-0-rescue-db529269582b41d89d3f9aed34b3ff97.im
 done
 ```
 
-Перезагружаюсь и делаю скрин
+Перезагружаюсь и делаю скрин  
 ![screen-012](./screens/screen-012.png)
