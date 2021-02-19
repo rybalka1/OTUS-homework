@@ -21,11 +21,11 @@ vagrant up
 - Стрелками up/down выбераею пенкт меню grub и нажимаю `e` чтобы отредактировать его
 - Добавляю `init=/bin/sh` в конец строки начитающейся с `linux16`
 
-![grub-init-sh](./screens/grub-init-sh.png)
+![screen-001](./screens/screen-001.png)
 
 - Нажимаю `ctrl+x` для загрузки с исправленным пунктом меню и загрузчик запускает командную оболочку `sh`
 
-![brub-init-root](./screens/brub-init-root.png)
+![screen-002](./screens/screen-002.png)
 
 - Перемотирую `rootfs` с доступом на запись
 
@@ -35,10 +35,10 @@ vagrant up
 
 - Проверяю
 
-![screen-grub-init-rw](./screens/grub-init-rw.png)
+![screen-003](./screens/screen-003.png)
 
 > Здесь я яиспользую запуск `/bin/sh` вместо процесса инициализации по умолчанию, поэтому результатом команды `echo $$` будет `1`, это PID принадлежит процессу `/bin/sh`
-> ![grub-init-pid1](./screens/grub-init-pid1.png)  
+> ![screen-004](./screens/screen-004.png)  
 > 
 > Этот метод, позволяет сразу получить доступ к корню
 
@@ -48,11 +48,11 @@ vagrant up
 
 - Добавляю `rd.break` в конец строки начитающейся с `linux16`
 
-![brub-rd-break-menuitem](./screens/brub-rd-break-menuitem.png)
+![screen-005](./screens/screen-005.png)
 
 - Нажимаю `ctrl+x` для загрузки с исправленным пунктом меню и загрузчик запускает командную оболочку
 
-![grub-rd-break-login](./screens/grub-rd-break-login.png)
+![screen-006](./screens/screen-006.png)
 
 - Теперь корень файловой системы доступен по пути `/sysroot`. Перемонтирую его в режим запись/чтение
 
@@ -68,11 +68,11 @@ vagrant up
    touch /.autorelabel
    ```
 
-![grub-rd-break-password](./screens/grub-rd-break-password.png)
+![screen-007](./screens/screen-007.png)
 
 - Выхожу из chroot, перегружаю виртуалку и вхожу как root с ранее изменённым паролем
 
-![grub-rd-break-login-as-root](./screens/grub-rd-break-login-as-root.png)
+![screen-008](./screens/screen-008.png)
 
 > Этот метод описан в официальной документации как рекомендованный для сброса пароля root без установочного диска. Он просто переводит нас в оболочку в конце выполнения initrd, прежде чем передать управление ядру Linux
 > Основное отличие метода с подстановкой параметра занрузки `init=/bin/sh` от метода с подстановкой параметра `rd.break` в том, что во втором случае мы попадаем в среду initrd, а корневая FS монтируется в `/sysroot` каталог.
@@ -83,15 +83,15 @@ vagrant up
 
 - Заменяю `ro` на `rw` и добавляю параметр `init=/sysroot/bin/sh` в конце строки, начинающейся с `linux16`
 
-![grub-init-syslinux-menuitem](./screens/grub-init-syslinux-menuitem.png)
+![screen-009](./screens/screen-009.png)
 
 - Нажимаю `ctrl+x` для загрузки с исправленным пунктом меню и загрузчик запускает командную оболочку
 
-![screens/grub-init-sysroot-login](./screens/grub-init-sysroot-login.png)
+![screens/screen-010](./screens/screen-010.png)
 
 - У нас сразу имеется доступ на запись к `/sysroot`
 
-![screens/grub-init-sysroot-rw](./screens/grub-init-sysroot-rw.png)
+![screens/screen-011](./screens/screen-011.png)
 
 ## Переименование root VG
 
@@ -327,4 +327,4 @@ done
 ```
 
 Перезагружаюсь и делаю скрин
-![dracut-tux](./screens/dracut-tux.png)
+![screen-012](./screens/screen-012.png)
