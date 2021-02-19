@@ -38,7 +38,8 @@ vagrant up
 ![screen-grub-init-rw](./screens/grub-init-rw.png)
 
 > Здесь я яиспользую запуск `/bin/sh` вместо процесса инициализации по умолчанию, поэтому результатом команды `echo $$` будет `1`, это PID принадлежит процессу `/bin/sh`
-> ![grub-init-pid1](./screens/grub-init-pid1.png)
+> ![grub-init-pid1](./screens/grub-init-pid1.png)  
+> 
 > Этот метод, позволяет сразу получить доступ к корню
 
 ### Вход с использованием `rd.break`
