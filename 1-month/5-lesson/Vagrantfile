@@ -3,7 +3,7 @@ MACHINES = {
   # VM name "kernel update"
   :"hw6" => {
               # VM box
-              :box_name => "vscoder/centos-7-5",
+              :box_name => "rybalka1/centos-7-5",
               # VM CPU count
               :cpus => 4,
               # VM RAM size (Mb)
