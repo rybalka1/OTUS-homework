@@ -1,7 +1,7 @@
 # Describe VMs
 MACHINES = {
   # VM name "kernel update"
-  :"hw6" => {
+  :"lesson5" => {
               # VM box
               :box_name => "rybalka1/3-lesson_lvm",
               # VM CPU count
