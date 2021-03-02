@@ -26,7 +26,7 @@
 ### Загрузить percona server
 
   ```shell
-  sudo wget -q http://www.percona.com/downloads/percona-release/redhat/0.1-6/percona-release-0.1-6.noarch.rpm -O /usr/share/nginx/html/repo/percona-release-0.1-6.noarch.rpm
+  sudo wget https://repo.percona.com/yum/percona-release-latest.noarch.rpm -O /usr/share/nginx/html/repo/percona-release-0.1-6.noarch.rpm
   ```
 
 ### Создать репозиторий с помощью команды `createrepo`
@@ -55,12 +55,12 @@
 ├── nginx-1.18.0-1.el7.ngx.x86_64.rpm
 ├── percona-release-0.1-6.noarch.rpm
 └── repodata
-    ├── 3ee366b6d643c5bedcf1e17b10c455f1f4ce60938704bbf0c41720a89163ed59-filelists.sqlite.bz2
-    ├── 5459dfa61666067f8da15de595281c7ddb2d67c85bf860e7f0ee741701ab056d-other.sqlite.bz2
-    ├── 5c8f283c72eebc13f1dabdf430b4706a68fadf9d386dfbdcc9fbb6e2eb79b7d0-primary.xml.gz
-    ├── 6524ce47a12c282b6ba132deb918183f5216cc57a51f4e193ae76c4680bbd982-primary.sqlite.bz2
-    ├── a29d879599ccbf765631d406d9df19be7cf53eb241ce6e0e8da971be980112c2-filelists.xml.gz
-    ├── d04190f2cd63fcaa9c37027d7d2d385778dc7aa146a4a26d18402517365c32a1-other.xml.gz
+    ├── 02e663eaa2a4c4ab6b90977099c0eb14849653eaa79c3d1b395ffc063d7266ec-filelists.sqlite.bz2
+    ├── 2286dfa2846ed01d616980d8a6ced890dad6d6dfbdaa4c2c13c04fdd0bccaba2-other.xml.gz
+    ├── 4cd92d9f8f3d750bb720c372d66966d4b139c879ba0b3b3a099afa24100c7378-primary.xml.gz
+    ├── 5f7a53912a7cf45a864b4615cee8f7305810d9b58bb3d88eea1f10d34ce61e05-filelists.xml.gz
+    ├── 68b50b1769b97d07ed03dc976f53e4490e78d8f719c04ce42871d39b745e4f81-primary.sqlite.bz2
+    ├── fee396eb841db8f37fddfbefe604db3ef0ae7d4468fb6702166cd16960895781-other.sqlite.bz2
     └── repomd.xml
 
 1 directory, 9 files
