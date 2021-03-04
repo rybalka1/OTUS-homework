@@ -1,0 +1,14 @@
+[Unit]
+Description=logmon service
+After=systemd-journald.service
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+User=logmon
+EnvironmentFile=/etc/sysconfig/logmon
+ExecStart=/bin/bash /usr/local/bin/logmon.sh
+
+[Install]
+WantedBy=multi-user.target

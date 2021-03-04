@@ -1,0 +1,6 @@
+# Filename to log pattern matches
+#LOG=$/tmp/logmon.log
+# Read log every $SEC seconds
+SEC=3
+# grep template pattern
+PATTERN=testmsg

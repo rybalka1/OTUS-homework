@@ -1,0 +1,14 @@
+# /etc/systemd/system/spawn-fcgi.service
+[Unit]
+Description=spawn-fcgi service
+After=syslog.target
+
+[Service]
+Type=forking
+PIDFile=/var/run/%p.pid
+SyslogIdentifier=%p
+EnvironmentFile=/etc/sysconfig/spawn-fcgi
+ExecStart=/usr/bin/spawn-fcgi $OPTIONS
+
+[Install]
+WantedBy=multi-user.target
