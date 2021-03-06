@@ -206,7 +206,7 @@ exit $?
 
 Создаём юнит-файл `spawn-fcgi.service` в `/etc/systemd/system`
 
-***Systemd юнит-файл*** --> [spawn-fcgi.service](./spawn-fcgi/spawn-fcgi.service)
+***Systemd юнит-файл*** --> [spawn-fcgi.service](https://github.com/rybalka1/OTUS-homework/blob/master/1-month/8-lesson/spawn-fcgi/spawn-fcgi)
 
 ```conf
 # /etc/systemd/system/spawn-fcgi.service
