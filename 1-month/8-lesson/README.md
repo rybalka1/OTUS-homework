@@ -281,7 +281,7 @@ sudo systemctl status spawn-fcgi
 - `./spawn-fcgi/spawn-fcgi.service` - systemd сервис файл
 - `./scripts/3-spawn-fcgi-service.sh` - устанавливает, включает и запускает сервис `systemd`
 
-***Systemd юнит-файл*** --> [Unit-file for spawn-fcgi](SPAWN-FCGI.md)
+***Systemd юнит-файл*** --> [Unit-file for spawn-fcgi](https://github.com/rybalka1/OTUS-homework/blob/master/1-month/8-lesson/spawn-fcgi/spawn-fcgi)
 ___
 
 ### 3. httpd запуск нескольких инстансов
