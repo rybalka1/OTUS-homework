@@ -48,6 +48,30 @@ cd /vagrant/files
 
 ```shell
 mail
+Heirloom Mail version 12.5 7/5/10.  Type ? for help.
+"/var/spool/mail/vagrant": 7 messages 7 new
+>N  1 root                  Wed Mar 10 16:16  60/4312  "access.log stats"
+ N  2 root                  Wed Mar 10 16:16  52/3387  "access.log stats"
+ N  3 root                  Wed Mar 10 16:16  52/3281  "access.log stats"
+ N  4 root                  Wed Mar 10 16:16  50/2545  "access.log stats"
+ N  5 root                  Wed Mar 10 16:16  46/1746  "access.log stats"
+ N  6 root                  Wed Mar 10 16:16  51/2758  "access.log stats"
+ N  7 root                  Wed Mar 10 16:16  52/2624  "access.log stats"
+& 
+Message  1:
+From root@hw8-bash.localdomain  Wed Mar 10 16:16:56 2021
+Return-Path: <root@hw8-bash.localdomain>
+X-Original-To: vagrant
+Delivered-To: vagrant@hw8-bash.localdomain
+Date: Wed, 10 Mar 2021 16:16:55 +0000
+To: vagrant@hw8-bash.localdomain
+Subject: access.log stats
+User-Agent: Heirloom mailx 12.5 7/5/10
+Content-Type: text/plain; charset=us-ascii
+From: root@hw8-bash.localdomain (root)
+Status: R
+
+Period from 14/Aug/2019:04:12:10 +0300 to 14/Aug/2019:09:10:21 +0300
 ```
 
 ___
