@@ -1,0 +1,11 @@
+[Unit]
+Description=Nginx Log Analyzer
+
+[Service]
+Type=oneshot
+User=nla
+EnvironmentFile=/etc/sysconfig/nla
+ExecStart=/bin/bash /usr/local/bin/nla.sh $OPTIONS
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,8 @@
+# -r|--recipient <destination email> - email address to send statistics to. Default: 'root'
+# -l|--logfile <path/to/access.log> - path to nginx access.log to analyse. Default: './access.log'
+# -L|--lockfile <path/to/lockfile.lock> - path to lockfile. Default: '/tmp/script.lock'
+# -S|--state-dir <path/to/state/directory> - path to directory to save state. Default: '/var/spool/nginx_log_analyzer'
+# -T|--top <num> - report top <num> results. Default: 10
+# -h|--help - Print this help and exit
+#PATH="/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin"
+OPTIONS="-T 10 -r vagrant@localhost -l /var/log/nginx/example.log"

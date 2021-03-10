@@ -10,3 +10,7 @@
 - [6-е задание "Управление пакетами. Дистрибьюция софта"](<https://github.com/rybalka1/OTUS-homework/tree/master/1-month/6-lesson>)
 - [7-е задание "NFS, FUSE"](<https://github.com/rybalka1/OTUS-homework/tree/master/1-month/7-lesson>)
 - [8-е задание "Инициализация системы. Systemd"](<https://github.com/rybalka1/OTUS-homework/tree/master/1-month/8-lesson>)
+
+[2-й месяц](https://github.com/rybalka1/OTUS-homework/tree/master/2-month)
+
+- [9-е задание "Bash"](<https://github.com/rybalka1/OTUS-homework/tree/master/2-month/9-lesson>)
