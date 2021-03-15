@@ -14,3 +14,4 @@
 [2-й месяц](https://github.com/rybalka1/OTUS-homework/tree/master/2-month)
 
 - [9-е задание "Bash"](<https://github.com/rybalka1/OTUS-homework/tree/master/2-month/9-lesson>)
+- [10-е задание "Управление процессами"](<https://github.com/rybalka1/OTUS-homework/tree/master/2-month/10-lesson>)
