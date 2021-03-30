@@ -1,0 +1,5 @@
+---
+- name: Install and configure nginx
+  hosts: all
+  roles:
+    - ansible-role-nginx

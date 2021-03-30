@@ -1,0 +1,11 @@
+---
+# Become root privileges on each task
+nginx_become: yes
+
+# Nginx version to install
+nginx_version: 1.19.1
+
+# Virtualhost server_name
+nginx_site_name: example.com
+# Virtualhost listen port
+nginx_site_listen: 8080

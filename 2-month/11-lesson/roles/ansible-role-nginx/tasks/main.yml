@@ -1,0 +1,16 @@
+---
+- include_vars:
+    file: "{{ ansible_distribution }}.yml"
+
+- include_tasks: "install_{{ ansible_distribution }}.yml"
+  tags:
+    - nginx_install
+
+- include_tasks: "configure.yml"
+  tags:
+    - nginx_configure
+
+#- include_tasks: "service_{{ ansible_service_mgr }}.yml"
+- include_tasks: "service.yml"
+  tags:
+    - nginx_service

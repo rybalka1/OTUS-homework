@@ -1,0 +1,7 @@
+---
+- name: Enable and start service
+  systemd:
+    name: nginx
+    enabled: yes
+    state: started
+  become: "{{ nginx_become }}"
