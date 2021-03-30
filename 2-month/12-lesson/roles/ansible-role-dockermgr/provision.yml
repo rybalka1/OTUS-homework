@@ -1,0 +1,15 @@
+---
+- name: Provision vagrant instance
+  hosts: all
+
+  roles:
+    - name: ansible-role-dockermgr
+      become: yes
+
+  post_tasks:
+    - name: Ensure user vagrant can run docker
+      shell: docker info
+      register: docker_info
+    - name: Show docker info
+      debug:
+        var: docker_info.stdout

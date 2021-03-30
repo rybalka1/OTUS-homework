@@ -1,0 +1,4 @@
+[Service]
+{% for manager in dockermgr_managers %}
+ExecStartPost=/usr/bin/setfacl -m "u:{{ manager }}:rw-" /var/run/docker.sock
+{% endfor %}

@@ -1,0 +1,13 @@
+---
+# Install docker
+dockermgr_install: yes
+
+# Configure service
+dockermgr_service: yes
+
+# Allow start/stop/restart docker service
+dockermgr_polkit: yes
+
+# List of users who can manage docker
+dockermgr_managers:
+  - vagrant

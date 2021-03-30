@@ -1,0 +1,18 @@
+#!/bin/bash
+
+set -eux
+
+ADM_GROUP={{ pamexec_admgroup }}
+
+WEEKEND="Sat Sun"
+
+# Check if current user is in $ADM_GROUP
+groups $PAM_USER | grep -qw "$ADM_GROUP" && exit 0
+
+# Else check if today is weekend
+if [ $(date +%u) -gt 5 ]; then
+    exit 1
+fi
+
+# Allow access by default
+exit 0

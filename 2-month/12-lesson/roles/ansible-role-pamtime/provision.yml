@@ -1,0 +1,33 @@
+---
+- name: Provision vagrant instance
+  hosts: all
+  vars:
+    aaa_pam_time:
+      - servces: "*"
+        ttys: "*"
+        users: "testuser"
+        times: "Wk0900-1800"
+      - servces: "*"
+        ttys: "*"
+        users: "testadmin"
+        times: "Al0000-2400"
+
+  pre_tasks:
+    - name: Generate public ssh key from vagrant private key file
+      connection: local
+      shell: "ssh-keygen -y -f ./.vagrant/machines/{{ ansible_hostname }}/virtualbox/private_key"
+      register: public_key
+    - name: Set public key value
+      set_fact:
+        aaa_public_key: "{{ public_key.stdout }}"
+
+  roles:
+    - name: ansible-role-pamtime
+      become: yes
+
+  post_tasks:
+    - debug:
+        msg: |
+          To connect to host, run:
+          ssh -i ./.vagrant/machines/{{ ansible_hostname }}/virtualbox/private_key -p {{ ansible_ssh_port }} {{ item.name }}@{{ ansible_ssh_host }}
+      loop: "{{ aaa_users }}"

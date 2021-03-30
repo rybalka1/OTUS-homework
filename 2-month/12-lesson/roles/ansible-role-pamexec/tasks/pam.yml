@@ -1,0 +1,18 @@
+---
+- name: Provide check-week-day.sh script
+  template:
+    src: check-week-day.sh.j2
+    dest: /usr/local/bin/check-week-day.sh
+    mode: "0555"
+
+- name: Enable module pam_exec
+  pamd:
+    name: sshd
+    type: account
+    control: required
+    module_path: pam_nologin.so
+    new_type: account
+    new_control: required
+    new_module_path: pam_exec.so
+    module_arguments: debug log=/var/log/pam_exec.log /usr/local/bin/check-week-day.sh
+    state: before

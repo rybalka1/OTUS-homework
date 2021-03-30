@@ -1,0 +1,12 @@
+---
+- name: Provide users
+  import_tasks: users.yml
+  when: pamexec_add_users | bool
+  tags:
+    - pamexec_users
+
+- name: Configure pam
+  import_tasks: pam.yml
+  when: pamexec_add_users | bool
+  tags:
+    - pamexec_pam

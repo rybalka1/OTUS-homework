@@ -1,0 +1,16 @@
+---
+- name: Provide time.conf
+  template:
+    src: time.conf.j2
+    dest: /etc/security/time.conf
+
+- name: Enable module pam_time
+  pamd:
+    name: sshd
+    type: account
+    control: required
+    module_path: pam_nologin.so
+    new_type: account
+    new_control: required
+    new_module_path: pam_time.so
+    state: before

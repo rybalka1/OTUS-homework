@@ -1,0 +1,21 @@
+---
+- name: Ensure necessary groups are present
+  group:
+    name: "{{ item.name }}"
+    state: present
+  loop: "{{ aaa_groups }}"
+
+- name: Add users
+  user:
+    name: "{{ item.name }}"
+    groups: "{{ item.groups }}"
+    state: present
+  loop: "{{ aaa_users }}"
+
+- name: Add authorized keys
+  authorized_key:
+    user: "{{ item.name }}"
+    key: "{{ item.key }}"
+    state: present
+  when: item.key is defined
+  loop: "{{ aaa_users }}"

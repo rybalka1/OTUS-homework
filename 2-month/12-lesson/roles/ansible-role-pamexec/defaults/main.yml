@@ -1,0 +1,32 @@
+---
+# Create users
+pamexec_add_users: yes
+
+# Configure pam
+pamexec_configure_pam: yes
+
+# Admins group name
+pamexec_admgroup: admin
+
+# List of groups
+pamexec_groups:
+  - admin
+  - users
+
+# List of users
+pamexec_users:
+  - name: testuser
+    key: "{{ pamexec_public_key }}"
+    groups:
+      - users
+  - name: testadmin
+    key: "{{ pamexec_public_key }}"
+    groups:
+      - admin
+  - name: vagrant
+    groups:
+      - admin
+
+# Public ssh key for created users
+# Note: it's a worst practice to use the same key for many users
+pamexec_public_key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"

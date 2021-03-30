@@ -1,0 +1,4 @@
+- name: "Install docker for {{ ansible_distribution }}"
+  yum:
+    name: docker
+    state: installed

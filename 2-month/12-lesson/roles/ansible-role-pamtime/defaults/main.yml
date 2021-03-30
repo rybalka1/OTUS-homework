@@ -1,0 +1,24 @@
+---
+aaa_groups:
+  - name: admin
+    # login_time: Al0000-2400
+  - name: users
+    # login_time: Wk0900-1800
+
+aaa_pam_time:
+  - servces: "*"
+    ttys: "*"
+    users: "*"
+    times: "Al0000-2400"
+
+aaa_users:
+  - name: testuser
+    key: "{{ aaa_public_key }}"
+    groups:
+      - users
+  - name: testadmin
+    key: "{{ aaa_public_key }}"
+    groups:
+      - admin
+
+aaa_public_key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"

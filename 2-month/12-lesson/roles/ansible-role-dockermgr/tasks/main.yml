@@ -1,0 +1,18 @@
+---
+- name: Install docker
+  include_tasks: "install_{{ ansible_distribution }}.yml"
+  when: dockermgr_install | bool
+  tags:
+    - dockermgr_install
+
+- name: Configure systemd service
+  include_tasks: service.yml
+  when: dockermgr_service | bool
+  tags:
+    - dockermgr_service
+
+- name: Provide polkit rules
+  include_tasks: polkit.yml
+  when: dockermgr_polkit | bool
+  tags:
+    - dockermgr_polkit

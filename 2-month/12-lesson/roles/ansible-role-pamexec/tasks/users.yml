@@ -1,0 +1,21 @@
+---
+- name: Ensure necessary groups are present
+  group:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ pamexec_groups }}"
+
+- name: Add users
+  user:
+    name: "{{ item.name }}"
+    groups: "{{ item.groups }}"
+    state: present
+  loop: "{{ pamexec_users }}"
+
+- name: Add authorized keys
+  authorized_key:
+    user: "{{ item.name }}"
+    key: "{{ item.key }}"
+    state: present
+  when: item.key is defined
+  loop: "{{ pamexec_users }}"
