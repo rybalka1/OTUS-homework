@@ -1,0 +1,112 @@
+---
+###
+# Steps
+###
+# Do installation steps like create user, group, directory
+prometheus_user_create: yes
+prometheus_directories_create: yes
+prometheus_install: yes
+# prometheus_force_download: no
+prometheus_selinux: yes
+prometheus_configure: yes
+
+###
+# User
+###
+# Prometheus system group name
+prometheus_group: prometheus
+# Prometheus system user name
+prometheus_user: prometheus
+
+###
+# Directories
+###
+# Prometheus database directory
+prometheus_db_dir: /var/db/prometheus
+# Prometheus configuration direcotry
+prometheus_config_dir: /etc/prometheus
+# Binary install dir
+prometheus_binary_install_dir: /usr/local/bin
+
+###
+# Installation
+###
+# Prometheus version
+prometheus_version: 2.20.1
+
+###
+# Systemd service
+###
+# prometheus service state
+prometheus_state: started
+# Automatically start prometheus service
+prometheus_autostart: yes
+# Storage retention period
+prometheus_storage_retention: "30d"
+# Storage retention size. Units supported: KB, MB, GB, TB, PB.
+prometheus_storage_retention_size: "0"
+# Listen host:port
+prometheus_web_listen_address: 0.0.0.0:9090
+# External URL
+prometheus_web_external_url: ""
+# Extra configuration flags
+prometheus_config_flags_extra: {}
+# prometheus_config_flags_extra:
+#   storage.tsdb.retention: 15d
+#   alertmanager.timeout: 10s
+
+###
+# Config
+###
+prometheus_config_file: prometheus.yml.j2
+# Scrape config for prometheus itself
+prometheus_scrape_configs_self:
+  - job_name: "prometheus"
+    metrics_path: "{{ prometheus_metrics_path }}"
+    static_configs:
+      - targets:
+          - "{{ ansible_fqdn | default(ansible_host) | default('localhost') }}:9090"
+# Additional scrape configs
+prometheus_scrape_configs: []
+
+prometheus_config:
+  global:
+    # How frequently to scrape targets by default.
+    scrape_interval: 1m
+
+    # How long until a scrape request times out.
+    scrape_timeout: 10s
+
+    # How frequently to evaluate rules.
+    evaluation_interval: 1m
+
+    # The labels to add to any time series or alerts when communicating with
+    # external systems (federation, remote storage, Alertmanager).
+    external_labels:
+      # <labelname>: <labelvalue>
+
+    # File to which PromQL queries are logged.
+    # Reloading the configuration will reopen the file.
+    #query_log_file: <string>
+
+  # Rule files specifies a list of globs. Rules and alerts are read from
+  # all matching files.
+  rule_files:
+    - "{{ prometheus_config_dir }}/rules/*.rules"
+
+  # A list of scrape configurations.
+  scrape_configs: "{{ prometheus_scrape_configs_self + prometheus_scrape_configs }}"
+  # Alerting specifies settings related to the Alertmanager.
+  alerting:
+    alert_relabel_configs:
+      # - <relabel_config>
+    alertmanagers:
+      # - <alertmanager_config>
+
+  # Settings related to the remote write feature.
+  remote_write:
+    # - <remote_write>
+
+  # Settings related to the remote read feature.
+  remote_read:
+    # - <remote_read>

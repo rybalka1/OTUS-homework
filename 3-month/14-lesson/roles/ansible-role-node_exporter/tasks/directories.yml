@@ -1,0 +1,18 @@
+---
+- name: create node_exporter textfile directory
+  file:
+    path: "{{ node_exporter_textfile_dir }}"
+    state: directory
+    owner: "{{ node_exporter_user }}"
+    group: "{{ node_exporter_group }}"
+    mode: "0770"
+
+- name: create node_exporter configuration directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "0775"
+  with_items:
+    - "{{ node_exporter_config_dir }}"

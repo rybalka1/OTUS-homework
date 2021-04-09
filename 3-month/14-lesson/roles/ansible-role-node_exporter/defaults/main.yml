@@ -1,0 +1,57 @@
+---
+###
+# Steps
+###
+# Do installation steps like create user, group, directory
+node_exporter_user_create: yes
+node_exporter_directories_create: yes
+node_exporter_install: yes
+# node_exporter_force_download: no
+node_exporter_selinux: yes
+node_exporter_configure: yes
+
+###
+# User
+###
+# node_exporter system group name
+node_exporter_group: node_exporter
+# node_exporter system user name
+node_exporter_user: node_exporter
+
+###
+# Directories
+###
+# Prometheus configuration direcotry
+node_exporter_config_dir: /etc/node_exporter
+# Textfile directory (see node_exporter documentation)
+node_exporter_textfile_dir: /var/lib/node_exporter
+# Binary install dir
+node_exporter_binary_install_dir: /usr/local/bin
+
+###
+# Installation
+###
+# node_exporter version
+node_exporter_version: 1.0.1
+
+###
+# Systemd service
+###
+# node_exporter service state
+node_exporter_state: started
+# Automatically start node_exporter service
+node_exporter_autostart: yes
+node_exporter_web_listen_address: "0.0.0.0:9100"
+node_exporter_enabled_collectors:
+  - systemd
+  - textfile:
+      directory: "{{ node_exporter_textfile_dir }}"
+#  - filesystem:
+#      ignored-mount-points: "^/(sys|proc|dev)($|/)"
+#      ignored-fs-types: "^(sys|proc|auto)fs$"
+node_exporter_disabled_collectors: []
+
+###
+# Config
+###
+node_exporter_config: {}

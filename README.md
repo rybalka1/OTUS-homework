@@ -21,3 +21,5 @@
 [3-й месяц](https://github.com/rybalka1/OTUS-homework/tree/master/3-month)
 
 - [13-е задание "SELinux - когда все запрещено "](<https://github.com/rybalka1/OTUS-homework/tree/master/3-month/13-lesson>)
+
+- [14-е задание "Мониторинг и алертинг "](<https://github.com/rybalka1/OTUS-homework/tree/master/3-month/14-lesson>)

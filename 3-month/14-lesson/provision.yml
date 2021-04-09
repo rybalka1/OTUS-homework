@@ -1,0 +1,41 @@
+---
+- name: Provision vagrant instance
+  hosts: all
+  vars:
+    #selinux_mode: enforcing
+    selinux_mode: permissive
+    selinux_reboot: yes
+    selinux_utils: yes
+    prometheus_web_listen_address: 0.0.0.0:9090
+    prometheus_scrape_configs:
+      - job_name: "node_exporter"
+        metrics_path: /metrics
+        static_configs:
+          - targets:
+              - "localhost:9100"
+    grafana_version: 7.1.5
+    grafana_security:
+      admin_user: admin
+      # unencrypted password, because of demo
+      admin_password: secret
+    grafana_datasources:
+      - name: prometheus
+        type: prometheus
+        access: proxy
+        url: "http://localhost:9090"
+        basicAuth: false
+    grafana_dashboards_dir: "dashboards"
+    grafana_dashboards:
+      - dashboard_id: 11074
+        revision_id: 4
+        datasource: prometheus
+  roles:
+    - name: ansible-role-selinux
+      become: yes
+      when: ansible_facts['os_family'] == 'RedHat'
+    - name: ansible-role-prometheus
+      become: yes
+    - name: ansible-role-node_exporter
+      become: yes
+    - name: cloudalchemy.grafana
+      become: yes

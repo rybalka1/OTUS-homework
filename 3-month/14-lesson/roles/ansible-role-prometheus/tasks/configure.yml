@@ -1,0 +1,28 @@
+---
+- name: configure prometheus
+  template:
+    src: "{{ prometheus_config_file }}"
+    dest: "{{ prometheus_config_dir }}/prometheus.yml"
+    force: true
+    owner: root
+    group: prometheus
+    mode: 0640
+    validate: "{{ prometheus_binary_install_dir }}/promtool check config %s"
+  notify:
+    - reload prometheus
+
+- name: create systemd service unit
+  template:
+    src: prometheus.service.j2
+    dest: /etc/systemd/system/prometheus.service
+    owner: root
+    group: root
+    mode: "0644"
+  notify:
+    - restart prometheus
+
+- name: Provide prometheus.service state
+  systemd:
+    name: prometheus.service
+    enabled: "{{ prometheus_autostart | bool }}"
+    state: "{{ prometheus_state }}"

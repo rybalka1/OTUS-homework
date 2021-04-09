@@ -1,0 +1,57 @@
+---
+- name: Gather facts
+  import_tasks: "facts.yml"
+  tags:
+    - node_exporter
+    - node_exporter_install
+    - node_exporter_user
+    - node_exporter_directories
+    - node_exporter_configure
+    - node_exporter_selinux
+
+- name: Gather variables
+  include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_distribution | lower }}.yml"
+  tags:
+    - node_exporter
+    - node_exporter_install
+    - node_exporter_user
+    - node_exporter_directories
+    - node_exporter_configure
+    - node_exporter_selinux
+
+- name: Provide node_exporter user and group
+  import_tasks: "user.yml"
+  when: node_exporter_user_create | bool
+  tags:
+    - node_exporter
+    - node_exporter_user
+
+- name: Provide node_exporter directories
+  import_tasks: "directories.yml"
+  when: node_exporter_directories_create | bool
+  tags:
+    - node_exporter
+    - node_exporter_directories
+
+- name: Provide node_exporter install
+  import_tasks: "install.yml"
+  when: node_exporter_install | bool
+  tags:
+    - node_exporter
+    - node_exporter_install
+
+- name: Provide node_exporter selinux configuration
+  import_tasks: "selinux.yml"
+  when: node_exporter_selinux | bool
+  tags:
+    - node_exporter
+    - node_exporter_selinux
+
+- name: Provide node_exporter configs
+  import_tasks: "configure.yml"
+  when: node_exporter_configure | bool
+  tags:
+    - node_exporter
+    - node_exporter_configure

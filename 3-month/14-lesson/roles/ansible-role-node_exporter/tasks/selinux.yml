@@ -1,0 +1,17 @@
+---
+- name: Install SELinux dependencies
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ node_exporter_selinux_packages }}"
+  register: _install_packages
+  until: _install_packages is succeeded
+  retries: 5
+  delay: 2
+
+- name: Allow node_exporter to bind to port in SELinux
+  seport:
+    ports: "{{ node_exporter_web_listen_address.split(':')[1] }}"
+    proto: tcp
+    setype: http_port_t
+    state: present

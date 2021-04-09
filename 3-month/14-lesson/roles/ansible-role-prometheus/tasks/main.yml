@@ -1,0 +1,57 @@
+---
+- name: Gather facts
+  import_tasks: "facts.yml"
+  tags:
+    - prometheus
+    - prometheus_install
+    - prometheus_user
+    - prometheus_directories
+    - prometheus_configure
+    - prometheus_selinux
+
+- name: Gather variables
+  include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_distribution | lower }}.yml"
+  tags:
+    - prometheus
+    - prometheus_install
+    - prometheus_user
+    - prometheus_directories
+    - prometheus_configure
+    - prometheus_selinux
+
+- name: Provide promitheus user and group
+  import_tasks: "user.yml"
+  when: prometheus_user_create | bool
+  tags:
+    - prometheus
+    - prometheus_user
+
+- name: Provide promitheus directories
+  import_tasks: "directories.yml"
+  when: prometheus_directories_create | bool
+  tags:
+    - prometheus
+    - prometheus_directories
+
+- name: Provide promitheus install
+  import_tasks: "install.yml"
+  when: prometheus_install | bool
+  tags:
+    - prometheus
+    - prometheus_install
+
+- name: Provide promitheus selinux configuration
+  import_tasks: "selinux.yml"
+  when: prometheus_selinux | bool
+  tags:
+    - prometheus
+    - prometheus_selinux
+
+- name: Provide promitheus configs
+  import_tasks: "configure.yml"
+  when: prometheus_configure | bool
+  tags:
+    - prometheus
+    - prometheus_configure
