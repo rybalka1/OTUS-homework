@@ -61,7 +61,7 @@
 
 ### Задание 1: nginx
 
-[NGINX.md](./NGINX.md)
+Подробнее - [NGINX.md](./NGINX.md)
 
 #### Тесты
 
@@ -241,7 +241,7 @@ nginx работает на указанных портах.
 
 ## Задание 2: SELinux: проблема с удаленным обновлением зоны DNS
 
-[SELINUX_DNS_PROBLEMS.md](./SELINUX_DNS_PROBLEMS.md)
+Подробнее - [SELINUX_DNS_PROBLEMS.md](./SELINUX_DNS_PROBLEMS.md)
 
 ## Как проверяем
 
