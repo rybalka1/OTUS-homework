@@ -62,5 +62,5 @@ vagrant destroy -f
 
 ## Скрины с продакшн на работе
 
-[Zabbix](screen/Zabbix.jpg)  
-[Grafana-zabbix](screen/Grafana.jpg)
+[Zabbix](screens/Zabbix.jpg)  
+[Grafana-zabbix](screens/Grafana.jpg)
