@@ -1,0 +1,14 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: vagrant
+platforms:
+  - name: centos-7
+    box: centos/7
+    cpus: 2
+    memory: 512
+provisioner:
+  name: ansible
+verifier:
+  name: testinfra

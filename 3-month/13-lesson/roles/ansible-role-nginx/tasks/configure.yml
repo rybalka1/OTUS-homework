@@ -1,0 +1,22 @@
+---
+- name: Provide nginx site config
+  template:
+    dest: "{{ nginx_site_config_path }}/{{ nginx_site_name }}.conf"
+    src: site.conf.j2
+    owner: root
+    group: root
+    mode: "0644"
+    # Validation doesn't work because
+    #validate: "nginx -t %s"
+  become: "{{ nginx_become }}"
+  notify:
+    - Reload nginx
+#
+# Uncomment if install from ubuntu repository
+# - name: Enable site (for Ubuntu)
+#   file:
+#     state: link
+#     src: "../sites-available/{{ nginx_site_name }}.conf"
+#     dest: "{{ nginx_config_path }}/sites-enabled/{{ nginx_site_name }}.conf"
+#   when: ansible_distribution == "Ubuntu"
+#   become: "{{ nginx_become }}"

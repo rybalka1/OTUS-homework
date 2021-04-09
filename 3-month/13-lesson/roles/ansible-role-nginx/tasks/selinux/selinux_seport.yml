@@ -1,0 +1,7 @@
+---
+- name: Allow nginx to listen on tcp port "{{ nginx_site_listen }}"
+  seport:
+    ports: "{{ nginx_site_listen }}"
+    proto: tcp
+    setype: "{{ nginx_selinux_seport_type }}"
+    state: present

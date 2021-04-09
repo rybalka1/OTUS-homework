@@ -1,0 +1,22 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: vagrant
+platforms:
+  - name: vscoder-centos-7-5
+    box: vscoder/centos-7-5
+    cpus: 2
+    memory: 512
+  - name: centos-7
+    box: centos/7
+    cpus: 2
+    memory: 512
+  - name: centos-8
+    box: centos/8
+    cpus: 2
+    memory: 512
+provisioner:
+  name: ansible
+verifier:
+  name: testinfra

@@ -1,0 +1,12 @@
+---
+- name: Allow nginx bind to port using seport
+  include_tasks: selinux/selinux_seport.yml
+  when: nginx_selinux_seport
+  tags:
+    - nginx_selinux_seport
+
+- name: Allow nginx bind to port using sebool
+  include_tasks: selinux/selinux_sebool.yml
+  when: nginx_selinux_sebool
+  tags:
+    - nginx_selinux_sebool

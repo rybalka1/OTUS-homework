@@ -1,0 +1,4 @@
+ansible==2.9.10
+molecule==3.0.5
+molecule-vagrant==0.3
+testinfra==5.2.2

@@ -1,3 +1,4 @@
 .vagrant/
 sata*
 *.code-workspace
+.venv

@@ -1,0 +1,35 @@
+---
+- name: Test nsupdate from client
+  hosts: client
+  become: true
+  tasks:
+    - name: Run nsupdate
+      shell: |
+        cat <<EOF | nsupdate -k /etc/named.zonetransfer.key
+        server 192.168.50.10
+        zone ddns.lab
+        update add www.ddns.lab. 60 A 192.168.50.15
+        send
+        EOF
+
+      register: nsupdate
+      failed_when: false
+
+    - name: Check output
+      debug:
+        msg: |
+          nsupdate.rc: {{ nsupdate.rc }}
+          nsupdate.stdout: {{ nsupdate.stdout }}
+          nsupdate.stderr: {{ nsupdate.stderr }}
+
+    - name: Lookup www.ddns.lab.
+      command: dig www.ddns.lab. @192.168.50.10
+      failed_when: false
+      register: dig
+
+    - name: Lookup result
+      debug:
+        msg: |
+          dig.rc: {{ dig.rc }}
+          dig.stdout: {{ dig.stdout }}
+          dig.stderr: {{ dig.stderr }}

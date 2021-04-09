@@ -17,3 +17,7 @@
 - [10-е задание "Управление процессами"](<https://github.com/rybalka1/OTUS-homework/tree/master/2-month/10-lesson>)
 - [11-е задание "Автоматизация администрирования. Ansible"](<https://github.com/rybalka1/OTUS-homework/tree/master/2-month/11-lesson>)
 - [12-е задание "Пользователи и группы. Авторизация и аутентификация"](<https://github.com/rybalka1/OTUS-homework/tree/master/2-month/12-lesson>)
+
+[3-й месяц](https://github.com/rybalka1/OTUS-homework/tree/master/3-month)
+
+- [13-е задание "SELinux - когда все запрещено "](<https://github.com/rybalka1/OTUS-homework/tree/master/3-month/13-lesson>)

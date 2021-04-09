@@ -1,0 +1,28 @@
+---
+###
+# SELinux enforcement
+###
+nginx_selinux: yes
+# Set selinux policy and mode
+nginx_selinux_policy: targeted
+nginx_selinux_mode: permissive
+# Reboot if required
+nginx_selinux_reboot: yes
+
+# allow nginx to bind to network port
+nginx_selinux_seport: no
+nginx_selinux_seport_type: http_port_t
+# Use seboolean
+nginx_selinux_sebool: no
+nginx_selinux_sebool_name: nis_enabled
+
+# Become root privileges on each task
+nginx_become: yes
+
+# Nginx version to install
+nginx_version: 1.19.1
+
+# Virtualhost server_name
+nginx_site_name: example.com
+# Virtualhost listen port
+nginx_site_listen: 8085

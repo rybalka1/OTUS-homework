@@ -1,0 +1,9 @@
+---
+- name: Enable selinux boolean "{{ nginx_selinux_sebool_name }}"
+  seboolean:
+    name: "{{ nginx_selinux_sebool_name }}"
+    state: yes
+    persistent: yes
+  when: nginx_selinux_sebool | bool
+  notify:
+    - Restart nginx

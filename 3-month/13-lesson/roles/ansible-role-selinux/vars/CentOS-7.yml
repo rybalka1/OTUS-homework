@@ -1,0 +1,7 @@
+---
+utils:
+  - setools-console
+  - policycoreutils-python
+  - policycoreutils-newrole
+  - selinux-policy-mls
+  #- setroubleshoot-server
