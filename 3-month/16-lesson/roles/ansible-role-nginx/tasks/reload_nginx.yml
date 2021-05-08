@@ -1,0 +1,8 @@
+---
+- name: Check nginx config
+  shell: nginx -t
+
+- name: Reload nginx
+  systemd:
+    name: nginx
+    state: reloaded

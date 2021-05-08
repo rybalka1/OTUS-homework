@@ -1,0 +1,67 @@
+---
+###
+# Flags
+###
+# Install nginx package
+nginx_install: yes
+# Update main config file
+nginx_configure_main: yes
+# Provide site configuration
+nginx_configure_site: yes
+# Configure selinux for site listen port
+nginx_selinux: yes
+# Provide systemd service configuration
+nginx_service: yes
+# Provide filebeat nginx module configuration
+nginx_filebeat: no
+
+###
+# Installation
+###
+# Nginx version to install
+nginx_version: 1.19.1
+
+###
+# SELinux enforcement
+###
+# allow nginx to bind to network port
+nginx_selinux_seport: no
+nginx_selinux_bind_seport_type: http_port_t
+# Allow nginx to connect to upstream ports
+nginx_selinux_connect_seport_type: http_port_t
+nginx_selinux_upstream_ports: []
+# Use seboolean
+nginx_selinux_sebool: no
+nginx_selinux_sebool_name: nis_enabled
+
+###
+# Main configuration
+###
+nginx_main_template_name: nginx.conf.j2
+nginx_main_error_log_items:
+  - path: /var/log/nginx/error.log
+    level: warn
+nginx_main_access_log_items:
+  - path: /var/log/nginx/access.log
+    format: main
+###
+# Site configuration
+###
+# Remove conf.d/default.conf
+nginx_site_remove_default: no
+# Site template config name
+nginx_site_template_name: site.conf.j2
+# Virtualhost server_name
+nginx_site_name: example.com
+# Virtualhost listen port
+nginx_site_listen: 8085
+
+###
+# Filebeat configuration
+###
+# Filebeat configuration path
+nginx_filebeat_config_path: /etc/filebeat
+nginx_filebeat_access_log_paths:
+  - "/var/log/nginx/access.log*"
+nginx_filebeat_error_log_paths:
+  - "/var/log/nginx/error.log*"

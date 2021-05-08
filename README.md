@@ -23,3 +23,4 @@
 - [13-е задание "SELinux - когда все запрещено "](<https://github.com/rybalka1/OTUS-homework/tree/master/3-month/13-lesson>)
 - [14-е задание "Мониторинг и алертинг"](<https://github.com/rybalka1/OTUS-homework/tree/master/3-month/14-lesson>)
 - [15-е задание "Резервное копирование"](<https://github.com/rybalka1/OTUS-homework/tree/master/3-month/15-lesson>)
+- [16-е задание "Сбор и анализ логов "](<https://github.com/rybalka1/OTUS-homework/tree/master/3-month/16-lesson>)

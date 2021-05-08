@@ -1,0 +1,21 @@
+version: "3.8"
+services:
+  nginx:
+    image: ${NGINX_IMAGE_NAME}:${NGINX_IMAGE_TAG}
+    build:
+      context: ./nginx
+    ports:
+      - "8080:${NGINX_DEFAULT_SITE_PORT}"
+    env_file: .env
+    networks:
+      - backend
+  php-fpm:
+    image: ${PHP_IMAGE_NAME}:${PHP_IMAGE_TAG}
+    build:
+      context: ./php-fpm
+    env_file: .env
+    networks:
+      - backend
+
+networks:
+  backend:

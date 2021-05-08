@@ -1,0 +1,31 @@
+---
+- name: Ensure directory "{{ nginx_site_config_path }}" exists
+  file:
+    name: "{{ nginx_site_config_path }}"
+    state: directory
+
+- name: Provide nginx site config
+  template:
+    dest: "{{ nginx_site_config_path }}/{{ nginx_site_name }}.conf"
+    src: "{{ nginx_site_template_name }}"
+    owner: root
+    group: root
+    mode: "0644"
+  notify:
+    - Reload nginx
+#
+# Uncomment if install from ubuntu repository
+# - name: Enable site (for Ubuntu)
+#   file:
+#     state: link
+#     src: "../sites-available/{{ nginx_site_name }}.conf"
+#     dest: "{{ nginx_config_path }}/sites-enabled/{{ nginx_site_name }}.conf"
+#   when: ansible_distribution == "Ubuntu"
+
+- name: Remove default.conf
+  file:
+    name: "{{ nginx_site_config_path }}/default.conf"
+    state: absent
+  when: nginx_site_remove_default | bool
+  notify:
+    - Reload nginx

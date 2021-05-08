@@ -1,0 +1,23 @@
+---
+- name: Add repo
+  yum_repository:
+    name: nginx
+    enabled: yes
+    state: present
+    gpgkey: https://nginx.org/keys/nginx_signing.key
+    gpgcheck: yes
+    baseurl: "http://nginx.org/packages/mainline/centos/$releasever/$basearch/"
+    description: Nginx mainline repository
+
+- name: Ensure openssl installed
+  yum:
+    name: openssl
+    state: present
+
+- name: Ensure nginx installed
+  yum:
+    name: "nginx-{{ nginx_version }}"
+    update_cache: yes
+    state: present
+    enablerepo: nginx
+    disablerepo: "*"

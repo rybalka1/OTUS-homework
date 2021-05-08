@@ -1,0 +1,11 @@
+---
+# NOTE: Filebeat configuration directory must exists
+- name: Provide filebeat nginx module configuration
+  template:
+    dest: "{{ nginx_filebeat_config_path }}/modules.d/nginx.yml"
+    src: "filebeat-module.yml.j2"
+    owner: root
+    group: root
+    mode: "0644"
+  notify:
+    - Reload nginx

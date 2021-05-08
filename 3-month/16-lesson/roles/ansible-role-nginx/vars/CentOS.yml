@@ -1,0 +1,3 @@
+---
+nginx_config_path: /etc/nginx
+nginx_site_config_path: "{{ nginx_config_path }}/conf.d"

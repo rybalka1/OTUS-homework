@@ -1,0 +1,14 @@
+---
+- name: Converge
+  hosts: all
+  become: yes
+  vars:
+    selinux_mode: enforcing
+    #selinux_mode: permissive
+  tasks:
+    - name: "Include ansible-role-selinux"
+      include_role:
+        name: "ansible-role-selinux"
+  # post_tasks:
+  #   - name: Reboot after configure
+  #     reboot:

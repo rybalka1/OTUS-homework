@@ -1,0 +1,29 @@
+---
+- name: Converge
+  hosts: all
+  become: yes
+  vars:
+    selinux_mode: enforcing
+    #nginx_selinux_mode: permissive
+    nginx_selinux_seport: yes
+    nginx_selinux_sebool: no
+    nginx_site_listen: 8085
+  tasks:
+    - name: "Include ansible-role-selinux"
+      include_role:
+        name: "ansible-role-selinux"
+    - name: "Include ansible-role-nginx"
+      include_role:
+        name: "ansible-role-nginx"
+  post_tasks:
+    - name: Reboot before test
+      reboot:
+    - name: Ensure nginx works
+      uri:
+        url: "http://127.0.0.1:{{ item }}"
+      delegate_to: localhost
+      become: no
+      loop:
+        - 8082
+        - 8083
+        - 8084

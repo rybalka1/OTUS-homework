@@ -1,0 +1,17 @@
+server {
+    listen ${NGINX_DEFAULT_SITE_PORT};
+    server_name _;
+
+    root ${NGINX_STATIC_ROOT}/default;
+    
+    error_log /proc/self/fd/2;
+    access_log /proc/self/fd/1;
+
+    location / {
+        index index.html index.htm;
+    }
+
+    location /version {
+        return 200 "${IMAGE_TAG}\n";
+    }
+}

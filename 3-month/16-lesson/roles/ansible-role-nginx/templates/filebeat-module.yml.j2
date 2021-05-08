@@ -1,0 +1,7 @@
+- module: nginx
+  access:
+    enabled: true
+    var.paths: {{ nginx_filebeat_access_log_paths | to_yaml }}
+  error:
+    enabled: true
+    var.paths: {{ nginx_filebeat_error_log_paths | to_yaml }}

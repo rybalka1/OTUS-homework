@@ -1,0 +1,12 @@
+---
+- include_vars:
+    file: "{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml"
+
+- import_tasks: "selinux.yml"
+  when: selinux_change
+  tags:
+    - selinux_change
+
+- include_tasks: "utils.yml"
+  tags:
+    - selinux_utils

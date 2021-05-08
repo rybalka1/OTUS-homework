@@ -1,0 +1,15 @@
+---
+- name: Ensure directory "{{ nginx_config_path }}" exists
+  file:
+    name: "{{ nginx_config_path }}"
+    state: directory
+
+- name: Provide nginx site config
+  template:
+    dest: "{{ nginx_config_path }}/nginx.conf.conf"
+    src: "{{ nginx_main_template_name }}"
+    owner: root
+    group: root
+    mode: "0644"
+  notify:
+    - Reload nginx

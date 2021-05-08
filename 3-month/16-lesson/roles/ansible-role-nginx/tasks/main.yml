@@ -1,0 +1,33 @@
+---
+- include_vars:
+    file: "{{ ansible_distribution }}.yml"
+
+- include_tasks: "install_{{ ansible_distribution }}.yml"
+  when: nginx_install | bool
+  tags:
+    - nginx_install
+
+- import_tasks: "configure_main.yml"
+  when: nginx_configure_main | bool
+  tags:
+    - nginx_configure_main
+
+- import_tasks: "configure_site.yml"
+  when: nginx_configure_site | bool
+  tags:
+    - nginx_configure_site
+
+- import_tasks: "selinux.yml"
+  when: nginx_selinux | bool
+  tags:
+    - nginx_selinux
+
+- import_tasks: "service.yml"
+  when: nginx_service | bool
+  tags:
+    - nginx_service
+
+- import_tasks: "filebeat.yml"
+  when: nginx_filebeat | bool
+  tags:
+    - nginx_filebeat

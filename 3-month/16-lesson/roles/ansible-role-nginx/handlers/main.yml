@@ -1,0 +1,13 @@
+---
+- name: Reload nginx
+  include_tasks: reload_nginx.yml
+
+- name: Restart nginx
+  systemd:
+    name: nginx.service
+    state: restarted
+
+- name: Restart filebeat
+  systemd:
+    name: filebeat.service
+    state: restarted

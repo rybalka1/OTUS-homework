@@ -1,0 +1,92 @@
+---
+- name: Provision all vagrant instances
+  hosts: all
+  vars:
+    selinux_mode: enforcing
+    #selinux_mode: permissive
+    selinux_reboot: yes
+    selinux_utils: yes
+  roles:
+    - name: ansible-role-selinux
+      become: yes
+      when: ansible_facts['os_family'] == 'RedHat'
+
+- name: Provision log server
+  hosts: log
+  vars:
+    # Elasticsearch
+    elasticsearch_version: "7.x"
+    elasticsearch_heap_size_min: 1g
+    elasticsearch_heap_size_max: 1g
+    elasticsearch_network_host: "0.0.0.0"
+    elasticsearch_http_port: 9200
+    elasticsearch_extra_options: |
+      discovery.seed_hosts:
+        - Lesson16-log
+      cluster.initial_master_nodes:
+        - Lesson16-log
+    # Kibana
+    kibana_version: "7.x"
+    kibana_server_host: "0.0.0.0"
+    kibana_server_port: 5601
+    kibana_elasticsearch_url: "http://localhost:9200"
+  roles:
+    - role: "geerlingguy.java"
+      become: yes
+    - role: geerlingguy.elasticsearch
+      become: yes
+    - role: geerlingguy.kibana
+      become: yes
+
+- name: Provision web-server
+  hosts: web
+  vars:
+    # Nginx
+    nginx_selinux: yes
+    nginx_selinux_seport: yes
+    nginx_selinux_seport_type: http_port_t
+    nginx_version: 1.19.1
+    nginx_site_name: kibana
+    nginx_site_listen: 80
+    nginx_selinux_upstream_ports:
+      - 5601
+    nginx_site_template_name: ./nginx/kibana.conf.j2
+    nginx_site_remove_default: yes
+    # Filebeat
+    filebeat_version: 7.x
+    filebeat_create_config: false
+    filebeat_output_logstash_enabled: false
+    filebeat_output_elasticsearch_enabled: true
+    filebeat_enable_logging: yes
+    filebeat_log_level: warning
+    filebeat_log_dir: /var/log/filebeat
+    filebeat_log_filename: filebeat.log
+    filebeat_inputs:
+      - type: syslog
+        enabled: yes
+        protocol.unix:
+          path: "/var/log/nginx/syslog.sock"
+          group: nginx
+          mode: "0660"
+  pre_tasks:
+    - name: Get syslog server facts
+      setup:
+      delegate_to: Lesson16-log
+    - debug:
+        msg: "{{ hostvars[groups['log'][0]].ansible_eth1.ipv4.address }}"
+  roles:
+    - role: ansible-role-nginx
+      become: yes
+      vars:
+        nginx_filebeat: yes
+    - role: geerlingguy.filebeat
+      become: yes
+      vars:
+        filebeat_output_elasticsearch_hosts:
+          - "{{ hostvars[groups.log.0].ansible_eth1.ipv4.address }}:9200"
+    - role: robertdebock.auditd
+      become: yes
+      vars:
+        auditd_rules:
+          - file: /etc/nginx/
+            keyname: nginx_conf
