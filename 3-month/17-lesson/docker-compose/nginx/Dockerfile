@@ -1,6 +1,6 @@
 FROM nginx:1.18.0-alpine
 
-LABEL maintainer="Aleksey Koloskov <vsyscoder@gmail.com>"
+LABEL maintainer="Rybalka Dmitrii <rybalka.dmitrii@gmail.com>"
 
 ENV NGINX_STATIC_ROOT=/data/www
 WORKDIR ${NGINX_STATIC_ROOT}

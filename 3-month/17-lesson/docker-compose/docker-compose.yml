@@ -19,3 +19,5 @@ services:
 
 networks:
   backend:
+    external:
+      name: my-network

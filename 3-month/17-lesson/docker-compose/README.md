@@ -1,20 +1,24 @@
-# nginx with php-fpm
+# nginx c php-fpm
 
-Here is a docker compose with nginx and php-fpm services
+Ниже docker compose с nginx и php-fpm
 
-## How to configure
+## Настройка окружения
 
-Copy `.env.example` file to `.env` and update variables:
-- container environment variables:
-  - `NGINX_STATIC_ROOT` directory in nginx container with static content
-  - `NGINX_DEFAULT_SITE_PORT` port to nginx container listen to (`listen` directive value)
-- compose-related variables
+Заходим в директорию 17-lesson/docker-compose
+
+Копируем `.env.example` в файл `.env` и заменяем переменные окружения на свои:
+
+- переменные среды контейнера:
+  - `NGINX_STATIC_ROOT` каталог в контейнере nginx со статическим содержимым
+  - `NGINX_DEFAULT_SITE_PORT` порт в контейнере который слушает nginx  (`listen` значение директивы)
+- compose-related переменные
   - `NGINX_IMAGE_NAME` nginx docker image name
   - `NGINX_IMAGE_TAG` nginx docker image tag
   - `PHP_IMAGE_NAME` php-fpm docker image name
   - `PHP_IMAGE_TAG` php-fpm docker image name
 
-This task implementation has the next directory structure:
+Реализация этой задачи имеет следующую структуру каталогов:
+
 ```tree
 ├── docker-compose.yml
 ├── nginx
@@ -33,118 +37,137 @@ This task implementation has the next directory structure:
 5 directories, 8 files
 ```
 
-- `docker-compose.yml`: compose file
-- `nginx`: docker context for nginx service
-- `nginx/templates`: directory for nginx config templates (substracted with environment variables values). All templates must have suffix `.template`
-- `nginx/www`: directory for nginx static html files
-- `php-fpm`: docker context for php-fpm service
-- `php-fpm/www`: directory for dynamic php content
+- `docker-compose.yml`: файл для docker-compose
+- `nginx`: контекст docker для сервиса nginx
+- `nginx/templates`: каталог для шаблонов конфигурации nginx (за вычетом значений переменных среды). Все шаблоны должны иметь суффикс `.template`
+- `nginx/www`: директория nginx для статических html файлов
+- `php-fpm`: контекст docker для php-fpm сервиса
+- `php-fpm/www`: директоря для динамического контекста php
 
-## How to run
+## Запускаем тестовое окружение
 
-Build image
+Собираем образ:
+
 ```shell
 docker-compose build
 ```
 
-Run compose
+Этот пунк те обязательный, нужен только если используется VPN или уже используется такой диапазон IP:
+
+```shell
+docker network create my-network --subnet 172.24.24.0/24
+```
+
+Запускаем compose:
+
 ```shell
 docker-compose up -d
 ```
 
-Check
+Проверяем:
+
 ```shell
 curl 127.0.0.1:8080/phpinfo.php
 ```
-or open in browser http://127.0.0.1:8080/phpinfo.php
 
-Stop compose
+или открываем в браузере http://127.0.0.1:8080/phpinfo.php
+
+Останавливаем compose
+
 ```shell
 docker-compose down
 ```
 
-## How to publish
+## Публикация своего образа в Docker Hub
 
-Login to docker hub (accaunt must exists)
+Войдиv в Docker Hub (аккаунт должен существовать)
+
 ```shell
 docker login
 ```
 
 Build an image
+
 ```shell
 docker-compose build
 ```
+
 ```log
 Building nginx
+Sending build context to Docker daemon  5.632kB
 Step 1/7 : FROM nginx:1.18.0-alpine
- ---> 8c1bfa967ebf
-Step 2/7 : LABEL maintainer="Aleksey Koloskov <vsyscoder@gmail.com>"
+ ---> 684dbf9f01f3
+Step 2/7 : LABEL maintainer="Rybalka Dmitrii <rybalka.dmitrii@gmail.com>"
  ---> Using cache
- ---> ca6ce2892bb5
+ ---> 8770cc98e979
 Step 3/7 : ENV NGINX_STATIC_ROOT=/data/www
  ---> Using cache
- ---> 3df3dd395d60
+ ---> bd4c8044f68a
 Step 4/7 : WORKDIR ${NGINX_STATIC_ROOT}
  ---> Using cache
- ---> 067714e5b6b3
+ ---> 7bcd1d2e1892
 Step 5/7 : RUN rm /etc/nginx/conf.d/default.conf
  ---> Using cache
- ---> 406061e43cfa
+ ---> dd76748c1d4b
 Step 6/7 : COPY templates /etc/nginx/templates
  ---> Using cache
- ---> 0b5d0c24ac87
+ ---> 4a0933c42acf
 Step 7/7 : COPY www ${NGINX_STATIC_ROOT}
  ---> Using cache
- ---> 9e28286ca98d
-
-Successfully built 9e28286ca98d
-Successfully tagged vscoder/nginx-php:1.0.0
+ ---> 11a086553d56
+Successfully built 11a086553d56
+Successfully tagged rybalka1/nginx-php:1.0.0
 Building php-fpm
+Sending build context to Docker daemon  4.608kB
 Step 1/4 : FROM php:7.4.9-fpm-alpine3.12
- ---> f9f075c5a926
-Step 2/4 : LABEL maintainer="Aleksey Koloskov <vsyscoder@gmail.com>"
+ ---> 01e347850069
+Step 2/4 : LABEL maintainer="Rybalka Dmitrii <rybalka.dmitrii@gmail.com>"
  ---> Using cache
- ---> 402f5989265a
+ ---> 8e0f4a4ed57b
 Step 3/4 : COPY www /var/www/html
  ---> Using cache
- ---> 593ab6e2ced4
+ ---> 34ba47d2bba0
 Step 4/4 : WORKDIR /var/www/html
  ---> Using cache
- ---> a12b109d3e9a
-
-Successfully built a12b109d3e9a
-Successfully tagged vscoder/php-fpm:1.0.0
+ ---> a580a1e10a9a
+Successfully built a580a1e10a9a
+Successfully tagged rybalka1/php-fpm:1.0.0
 ```
 
-Publish nginx image
+Публикуем образ на Docker Hub:
+
 ```shell
 docker-compose push
 ```
+
 ```log
-Pushing nginx (vscoder/nginx-php:1.0.0)...
-The push refers to repository [docker.io/vscoder/nginx-php]
-2b29c204086d: Pushed2a0b9578a3b6: Pushed88de5337d8de: Pushed
-057cebcbe53c: Pushed
-37ea6c8b75fa: Mounted from library/nginx
-14f687b6870a: Mounted from library/nginx
-a638f39e4bbd: Mounted from library/nginx
-4f8672401053: Mounted from library/nginx
-3e207b409db3: Mounted from library/nginx
-1.0.0: digest: sha256:3f240b23d6b5bdd948ec8c07df0a4cff8f6b1c90b571571575f0a003850b86fa size: 2188
-Pushing php-fpm (vscoder/php-fpm:1.0.0)...
-The push refers to repository [docker.io/vscoder/php-fpm]
-0e6501fd3519: Pushed424670d9a7c5: Mounted from library/php
-5efe40cdbc78: Mounted from library/php
-a741fff4cdfc: Mounted from library/php
-44cd3f68f8b1: Mounted from library/php
+Pushing nginx (rybalka1/nginx-php:1.0.0)...
+The push refers to repository [docker.io/rybalka1/nginx-php]
+c09fef7711f7: Pushed
+720ba35f1dd2: Pushed
+69a7ce68515d: Pushed
+acd0cf1084b8: Pushed
+f88365b5c5d3: Mounted from library/nginx
+bda4c7e5e442: Mounted from library/nginx
+154dfe1bc87d: Mounted from library/nginx
+d1cf28aead06: Mounted from library/nginx
+9a5d14f9f550: Mounted from library/nginx
+1.0.0: digest: sha256:f1712da48ee8b296d620b425a62a2064216e8929a87cee714e97a939ffdb46a6 size: 2188
+Pushing php-fpm (rybalka1/php-fpm:1.0.0)...
+The push refers to repository [docker.io/rybalka1/php-fpm]
+186caeaa964b: Pushed
+378b8b8fff6a: Mounted from library/php
+88911823ac5d: Mounted from library/php
+a7c6f279b07e: Mounted from library/php
+0e4882c0ad19: Mounted from library/php
 5b139208dd54: Mounted from library/php
 76e7b3bdfbef: Mounted from library/php
 81c338ff74a3: Mounted from library/php
 308ef7bef157: Mounted from library/php
 d94df04fea90: Mounted from library/php
-50644c29ef5a: Mounted from vscoder/nginx
-1.0.0: digest: sha256:d75058f2188f5f26c26f494fbd1105ebd4f601c9fe4415d3317c15b180e26ec3 size: 2618
+50644c29ef5a: Mounted from rybalka1/nginx
+1.0.0: digest: sha256:52bf43d019008ee762f8be1c51a301208506cca16deca934c830bff11e98862f size: 2618
 ```
 
-- https://hub.docker.com/r/vscoder/nginx-php
-- https://hub.docker.com/r/vscoder/php-fpm
+- <https://hub.docker.com/r/rybalka1/nginx-php>
+- <https://hub.docker.com/r/rybalka1/php-fpm>

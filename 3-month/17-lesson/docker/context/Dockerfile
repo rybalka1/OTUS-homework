@@ -1,6 +1,6 @@
 FROM alpine:3.12.0
 
-LABEL maintainer="Aleksey Koloskov <vsyscoder@gmail.com>"
+LABEL maintainer="Dmitry Rybalka <rybalka.dmitrii@gmail.com>"
 
 # nginx version to install (must be available in )
 ARG NGINX_VERSION=1.18.0-r0

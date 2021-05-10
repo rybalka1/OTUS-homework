@@ -5,7 +5,12 @@ services:
     build:
       context: ./context
       args:
-        NGINX_VERSION: 1.18.0-r0
+        NGINX_VERSION: 1.18.0-r1
     ports:
       - "8080:${NGINX_DEFAULT_SITE_PORT}"
     env_file: .env
+
+networks:
+  default:
+    external:
+      name: my-network
